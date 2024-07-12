@@ -1,12 +1,6 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Feb  1 11:01:31 2024
-
-@author: 20bansalta
-"""
-
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 from mnist import MNIST
 from PIL import Image, ImageDraw
 import tkinter as tk
@@ -24,7 +18,9 @@ def cross_entropy_loss(y_pred, y_true): return -np.sum(y_true * np.log(y_pred + 
 
 
 def load_dataset():
-    mndata = MNIST("MNIST_files")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    relative_mndata_path = os.path.join(script_dir, "MNIST_files")
+    mndata = MNIST(relative_mndata_path)
     x_train, y_train = mndata.load_training()
     x_test, y_test = mndata.load_testing()
     return np.array(x_train), np.array(y_train), np.array(x_test), np.array(y_test)
@@ -32,14 +28,18 @@ def load_dataset():
 def load_model():
     weight_matrices = []
     biases = []
+    script_dir = os.path.dirname(os.path.abspath(__file__))
 
+    # Define the relative path
+    relative_weight_path = os.path.join(script_dir, "100_epochs/weight_matrices.npz")
+    relative_bias_path = os.path.join(script_dir, "100_epochs/biases.npz")
     # Load weight matrices
-    with np.load("100_epochs/weight_matrices.npz") as data:
+    with np.load(relative_weight_path) as data:
         for key in data.keys():
             weight_matrices.append(data[key])
 
     # Load biases
-    with np.load("100_epochs/biases.npz") as data:
+    with np.load(relative_bias_path) as data:
         for key in data.keys():
             biases.append(data[key])
 
