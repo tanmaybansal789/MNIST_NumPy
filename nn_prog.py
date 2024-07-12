@@ -16,13 +16,13 @@ def relu_rate(x): return np.where(x>0, 1, 0)
 
 
 def load_dataset():
-    mndata = MNIST("C:/Users/20bansalta/OneDrive - Hampton School/Documents/NN implementation/MNIST_files")
+    mndata = MNIST("MNIST_files")
     x_train, y_train = mndata.load_training()
     x_test, y_test = mndata.load_testing()
     return np.array(x_train), np.array(y_train), np.array(x_test), np.array(y_test)
 
 def forward_propogation(weight_matrices, input_layer, biases):
-    """Performs dynamic forward propogation on a list of numpy arrays representing weight matrices and biases, with an input layer"""
+    """Performs dynamic forward propogation on two lists of numpy arrays representing weight matrices and biases, with an input layer"""
     activations = [input_layer] # Add input layer as first item in activations
     for layer in range(len(weight_matrices)):
         z = np.matmul(weight_matrices[layer], activations[layer])
@@ -70,7 +70,6 @@ def update_biases(biases, dC_db, learning_rate):
     #update biases based on a learning rate
 
 def train_network(weight_matrices, biases, x_train, y_train_one_hot, epochs, batch_size, learning_rate):
-    """mini-batch training"""
     for epoch in range(epochs):
         # Shuffle the dataset at the beginning of each epoch
         permutation = np.random.permutation(x_train.shape[0])
