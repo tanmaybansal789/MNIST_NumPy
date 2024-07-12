@@ -24,7 +24,7 @@ def cross_entropy_loss(y_pred, y_true): return -np.sum(y_true * np.log(y_pred + 
 
 
 def load_dataset():
-    mndata = MNIST("C:/Users/20bansalta/OneDrive - Hampton School/Documents/NN implementation/MNIST_files")
+    mndata = MNIST("MNIST_files")
     x_train, y_train = mndata.load_training()
     x_test, y_test = mndata.load_testing()
     return np.array(x_train), np.array(y_train), np.array(x_test), np.array(y_test)
@@ -34,12 +34,12 @@ def load_model():
     biases = []
 
     # Load weight matrices
-    with np.load("C:/Users/20bansalta/OneDrive - Hampton School/Documents/NN implementation/100_epochs/weight_matrices.npz") as data:
+    with np.load("100_epochs/weight_matrices.npz") as data:
         for key in data.keys():
             weight_matrices.append(data[key])
 
     # Load biases
-    with np.load("C:/Users/20bansalta/OneDrive - Hampton School/Documents/NN implementation/100_epochs/biases.npz") as data:
+    with np.load("100_epochs/biases.npz") as data:
         for key in data.keys():
             biases.append(data[key])
 
@@ -67,22 +67,6 @@ def predict_digit(in_digit):
     activations = forward_propogation(weight_matrices, in_digit, biases)
     predicted_digit = np.argmax(activations[-1])
     return predicted_digit, activations[-1][predicted_digit] * 100
-
-def load_model():
-    weight_matrices = []
-    biases = []
-
-    # Load weight matrices
-    with np.load("C:/Users/20bansalta/OneDrive - Hampton School/Documents/NN implementation/100_epochs/weight_matrices.npz") as data:
-        for key in data.keys():
-            weight_matrices.append(data[key])
-
-    # Load biases
-    with np.load("C:/Users/20bansalta/OneDrive - Hampton School/Documents/NN implementation/100_epochs/biases.npz") as data:
-        for key in data.keys():
-            biases.append(data[key])
-
-    return weight_matrices, biases
 
 _, _, x_test, y_test = load_dataset()
 x_test = x_test.astype('float32') / 255.0
