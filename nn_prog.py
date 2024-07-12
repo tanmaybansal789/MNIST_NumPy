@@ -16,7 +16,9 @@ def relu_rate(x): return np.where(x>0, 1, 0)
 
 
 def load_dataset():
-    mndata = MNIST("MNIST_files")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    relative_mndata_path = os.path.join(script_dir, "MNIST_files")
+    mndata = MNIST(relative_mndata_path)
     x_train, y_train = mndata.load_training()
     x_test, y_test = mndata.load_testing()
     return np.array(x_train), np.array(y_train), np.array(x_test), np.array(y_test)
